@@ -7,8 +7,11 @@ import {
     MDBCol,
     MDBInput
 } from 'mdb-react-ui-kit';
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
+
     return (
         <MDBContainer className="my-5 gradient-form">
             <MDBRow>
@@ -39,9 +42,8 @@ function Login() {
                         />
 
                         <div className="text-center pt-1 mb-5 pb-1">
-                            <MDBBtn className="mb-4 w-100 gradient-custom-2">
-                                Iniciar sesión
-                            </MDBBtn>
+                            <button className="mb-4 btn-action" onClick={() => navigate('/main')}>INICIO</button>
+
 
                         </div>
                     </div>

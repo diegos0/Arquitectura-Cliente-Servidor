@@ -48,12 +48,12 @@ const Principal = () => {
 
             {/* Nav */}
             <nav className="navbar">
-                <button className="nav-item active">INICIO</button>
-                <button className="nav-item active" onClick={() => navigate('/alumnos')}>Alumnos</button>
-                <button className="nav-item">Proyectos</button>
-                <button className="nav-item">Docentes</button>
-                <button className="nav-item">Empresas</button>
-                <button className="nav-item">Reportes</button>
+                <button className="nav-item" onClick={() => navigate('/main')}>Inicio</button>
+                <button className="nav-item " onClick={() => navigate('/alumnos')}>Alumnos</button>
+                <button className="nav-item" onClick={() => navigate('/proyectos')}>Proyectos</button>
+                <button className="nav-item" onClick={() => navigate('/main')}>Docentes</button>
+                <button className="nav-item" onClick={() => navigate('/main')}>Empresas</button>
+                <button className="nav-item" onClick={() => navigate('/main')}>Reportes</button>
             </nav>
 
             {/* Busqueda */}

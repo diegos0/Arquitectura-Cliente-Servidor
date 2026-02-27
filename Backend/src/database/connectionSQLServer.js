@@ -1,10 +1,10 @@
 import sql from 'mssql';
 
 const config = {
-    server: 'DESKTOP-8A2N2ML',
-    database: 'master',
-    user: 'root',
-    password: 'roo1',
+    server: 'localhost',
+    database: 'ProyectoAD',
+    user: 'sa',
+    password: '12345',
     options: {
         encrypt: false,
         trustServerCertificate: true

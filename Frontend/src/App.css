@@ -707,6 +707,124 @@
     margin-bottom: 1.5rem;
 }
 
+.result-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    background: linear-gradient(135deg, #1e3a5f, #2d6a9f);
+    color: white;
+}
+
+.student-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.student-name {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    align-content: center;
+    color: #e8f0f9;
+}
+
+.student-meta {
+    font-size: 0.85rem;
+    margin-top: 2px;
+    display: block;
+    color: #e8f0f9;
+
+}
+
+/* Las tres columnas en una fila */
+.card-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+}
+
+.info-column {
+    padding: 24px 28px;
+    border-right: 1px solid #f0f0f0;
+}
+
+.info-column:last-child {
+    border-right: none;
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e8f0f9;
+}
+
+.column-icon {
+    font-size: 1rem;
+}
+
+.column-title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #2d6a9f;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.info-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #999;
+    margin-bottom: 2px;
+}
+
+.info-value {
+    font-size: 0.9rem;
+    color: #222;
+    font-weight: 500;
+}
+
+/* Responsive: en móvil apila las columnas */
+@media (max-width: 768px) {
+    .card-columns {
+        grid-template-columns: 1fr;
+    }
+    .info-column {
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .info-column:last-child {
+        border-bottom: none;
+    }
+}
+
 .btn-nuevo {
     padding: 0.2rem 1rem;
     border: none;

@@ -17,7 +17,8 @@ const Alumnos = () => {
             carrera: 'Ing. Sistemas',
             empresa: 'IBM México',
             estado: 'En Proceso',
-            fechaRegistro: '15/02/2026'
+            fechaRegistro: '15/02/2026',
+            fechaFin: '15/08/2027'
         },
         {
             id: 2,
@@ -26,7 +27,9 @@ const Alumnos = () => {
             carrera: 'Ing. Industrial',
             empresa: 'Toyota',
             estado: 'Completado',
-            fechaRegistro: '14/02/2026'
+            fechaRegistro: '14/02/2026',
+            fechaFin: '15/08/2027'
+
         },
         {
             id: 3,
@@ -36,6 +39,7 @@ const Alumnos = () => {
             empresa: 'Siemens',
             estado: 'En Proceso',
             fechaRegistro: '13/02/2026'
+            ,fechaFin: '15/08/2027'
         },
         {
             id: 4,
@@ -45,6 +49,7 @@ const Alumnos = () => {
             empresa: 'Microsoft',
             estado: 'Pendiente',
             fechaRegistro: '12/02/2026'
+            ,fechaFin: '15/08/2027'
         },
         {
             id: 5,
@@ -67,42 +72,6 @@ const Alumnos = () => {
             empresa: 'Tecnológico de México',
             estado: 'En Proceso',
             fechaRegistro: '10/02/2026'
-        },
-        {
-            id: 7,
-            nombre: 'Sofia Hernández Villa',
-            noControl: '21051488',
-            carrera: 'Ing. Industrial',
-            empresa: 'Nissan',
-            estado: 'Completado',
-            fechaRegistro: '09/02/2026'
-        },
-        {
-            id: 8,
-            nombre: 'Roberto Jiménez Mora',
-            noControl: '21051486',
-            carrera: 'Ing. Electrónica',
-            empresa: 'Samsung',
-            estado: 'En Proceso',
-            fechaRegistro: '08/02/2026'
-        },
-        {
-            id: 9,
-            nombre: 'Valentina Cruz Ortiz',
-            noControl: '21051485',
-            carrera: 'Ing. Sistemas',
-            empresa: 'Google',
-            estado: 'Pendiente',
-            fechaRegistro: '07/02/2026'
-        },
-        {
-            id: 10,
-            nombre: 'Miguel Ángel Flores',
-            noControl: '21051484',
-            carrera: 'Ing. Gestión',
-            empresa: 'Coca-Cola',
-            estado: 'Completado',
-            fechaRegistro: '06/02/2026'
         }
     ];
 
@@ -117,24 +86,6 @@ const Alumnos = () => {
 
         return matchesSearch && matchesCarrera && matchesEstado;
     });
-
-    const handleNuevoAlumno = () => {
-        alert('Abrir formulario de nuevo alumno');
-    };
-
-    const handleVerDetalles = (alumno) => {
-        alert(`Ver detalles de ${alumno.nombre}`);
-    };
-
-    const handleEditar = (alumno) => {
-        alert(`Editar ${alumno.nombre}`);
-    };
-
-    const handleEliminar = (alumno) => {
-        if (window.confirm(`¿Estás seguro de eliminar a ${alumno.nombre}?`)) {
-            alert('Alumno eliminado');
-        }
-    };
 
     const getEstadoClass = (estado) => {
         switch(estado) {
@@ -173,12 +124,12 @@ const Alumnos = () => {
 
             {/* Navigation */}
             <nav className="navbar">
-                <button className="nav-item" onClick={() => navigate('/main')}>INICIO</button>
+                <button className="nav-item" onClick={() => navigate('/main')}>Inicio</button>
                 <button className="nav-item " onClick={() => navigate('/alumnos')}>Alumnos</button>
                 <button className="nav-item" onClick={() => navigate('/proyectos')}>Proyectos</button>
-                <button className="nav-item" onClick={() => navigate('/main')}>Docentes</button>
-                <button className="nav-item" onClick={() => navigate('/main')}>Empresas</button>
-                <button className="nav-item" onClick={() => navigate('/main')}>Reportes</button>
+                <button className="nav-item" onClick={() => navigate('/docentes')}>Docentes</button>
+                <button className="nav-item" onClick={() => navigate('/empresas')}>Empresas</button>
+                <button className="nav-item" onClick={() => navigate('/reportes')}>Reportes</button>
             </nav>
 
             {/* Breadcrumb */}
@@ -214,10 +165,6 @@ const Alumnos = () => {
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                         </div>
-                        <div className="stat-info">
-                            <h3>En Proceso</h3>
-                            <p className="stat-number">87</p>
-                        </div>
                     </div>
 
                     <div className="stat-card">
@@ -227,10 +174,7 @@ const Alumnos = () => {
                                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
                             </svg>
                         </div>
-                        <div className="stat-info">
-                            <h3>Completados</h3>
-                            <p className="stat-number">52</p>
-                        </div>
+
                     </div>
 
                     <div className="stat-card">
@@ -241,10 +185,7 @@ const Alumnos = () => {
                                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
                             </svg>
                         </div>
-                        <div className="stat-info">
-                            <h3>Pendientes</h3>
-                            <p className="stat-number">11</p>
-                        </div>
+
                     </div>
                 </div>
 
@@ -252,13 +193,6 @@ const Alumnos = () => {
                 <section className="search-filters-section">
                     <div className="section-header">
                         <h2 className="section-title">Búsqueda de Alumnos</h2>
-                        <button className="btn btn-nuevo" onClick={handleNuevoAlumno}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Nuevo Alumno
-                        </button>
                     </div>
 
                     <div className="filters-container">
@@ -334,38 +268,7 @@ const Alumnos = () => {
                                     </td>
                                     <td>{alumno.fechaRegistro}</td>
                                     <td>
-                                        <div className="action-buttons-table">
-                                            <button
-                                                className="btn-icon btn-icon-view"
-                                                onClick={() => handleVerDetalles(alumno)}
-                                                title="Ver detalles"
-                                            >
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                </svg>
-                                            </button>
-                                            <button
-                                                className="btn-icon btn-icon-edit"
-                                                onClick={() => handleEditar(alumno)}
-                                                title="Editar"
-                                            >
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                                </svg>
-                                            </button>
-                                            <button
-                                                className="btn-icon btn-icon-delete"
-                                                onClick={() => handleEliminar(alumno)}
-                                                title="Eliminar"
-                                            >
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
+
                                     </td>
                                 </tr>
                             ))}
@@ -399,8 +302,8 @@ const Alumnos = () => {
                                         <span className="detail-value">{alumno.empresa}</span>
                                     </div>
                                     <div className="recent-detail">
-                                        <span className="detail-label">Estado:</span>
-                                        <span className={`status-badge ${getEstadoClass(alumno.estado)}`}>
+                                        <span className="detail-label">Registrado:</span>
+                                        <span className="detail-value">{alumno.fechaRegistro}
                       {alumno.estado}
                     </span>
                                     </div>
@@ -409,11 +312,7 @@ const Alumnos = () => {
                                         <span className="detail-value">{alumno.fechaRegistro}</span>
                                     </div>
                                 </div>
-                                <div className="recent-card-footer">
-                                    <button className="btn-link" onClick={() => handleVerDetalles(alumno)}>
-                                        Ver detalles →
-                                    </button>
-                                </div>
+
                             </div>
                         ))}
                     </div>

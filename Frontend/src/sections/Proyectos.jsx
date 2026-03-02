@@ -157,7 +157,7 @@ const Proyectos = () => {
 
             {/* Navigation */}
             <nav className="navbar">
-                <button className="nav-item" onClick={() => navigate('/principal')}>INICIO</button>
+                <button className="nav-item" onClick={() => navigate('/main')}>Inicio</button>
                 <button className="nav-item" onClick={() => navigate('/alumnos')}>Alumnos</button>
                 <button className="nav-item active" onClick={() => navigate('/proyectos')}>Proyectos</button>
                 <button className="nav-item" onClick={() => navigate('/docentes')}>Docentes</button>

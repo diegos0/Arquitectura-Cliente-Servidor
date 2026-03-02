@@ -1,16 +1,16 @@
-import { getConnection } from "./database/connectionSQLServer.js";
+import express from "express";
+import cors from "cors";
+import alumnoRoutes from "./routes/alumnoRoutes.js";
 
-const getProducts = async () => {
-    try {
-        const pool = await getConnection();
-        const result = await pool.request().query("SELECT * FROM Alumno");
+const app = express();
 
-        console.log(result.recordset); // mejor mostrar solo los datos
-        console.log("Alumnos obtenidos correctamente");
+app.use(cors());
+app.use(express.json());
 
-    } catch (error) {
-        console.log(error);
-    }
-}
+app.use("/api/alumnos", alumnoRoutes);
 
-getProducts();
+const PORT = 4000;
+
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+});

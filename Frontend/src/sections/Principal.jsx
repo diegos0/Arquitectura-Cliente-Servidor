@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import '../App.css'
-import Alumnos from "./Alumnos"
-import {useNavigate} from "react-router-dom";
-
-
+import { useNavigate } from "react-router-dom";
+import RegistrarProyectoModal from './RegistrarProyectoModal';
 
 const Principal = () => {
     const [numeroControl, setNumeroControl] = useState('');
     const [alumnoEncontrado, setAlumnoEncontrado] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
 
-    const handleBuscar = () => {
-
-        // Busqueda
-        setAlumnoEncontrado({
-            nombre: 'Juan Perez',
-            noControl: '21051487',
-            carrera: 'Ing Sistemas',
-            proyecto: 'Sistema de Inventarios',
-            empresa: 'Tecnologico de Mexico',
-            asesor: 'Ing.Lopez',
-            estado: 'En Proceso',
-            periodo: 'Ene-Jul 2026'
-        });
+    const handleBuscar = async () => {
+        if (!numeroControl) {
+            alert("Ingresa un número de control");
+            return;
+        }
+        setLoading(true);
+        try {
+            const response = await fetch(`http://localhost:4000/api/alumnos/${numeroControl}`);
+            if (!response.ok) throw new Error("Alumno no encontrado");
+            const data = await response.json();
+            setAlumnoEncontrado(data);
+        } catch (error) {
+            alert(error.message);
+            setAlumnoEncontrado(null);
+        }
+        setLoading(false);
     };
 
     return (
@@ -46,29 +49,24 @@ const Principal = () => {
                 </div>
             </header>
 
-            {/* Nav */}
             <nav className="navbar">
                 <button className="nav-item" onClick={() => navigate('/main')}>Inicio</button>
-                <button className="nav-item " onClick={() => navigate('/alumnos')}>Alumnos</button>
+                <button className="nav-item" onClick={() => navigate('/alumnos')}>Alumnos</button>
                 <button className="nav-item" onClick={() => navigate('/proyectos')}>Proyectos</button>
-                <button className="nav-item" onClick={() => navigate('/main')}>Docentes</button>
-                <button className="nav-item" onClick={() => navigate('/main')}>Empresas</button>
-                <button className="nav-item" onClick={() => navigate('/main')}>Reportes</button>
+                <button className="nav-item" onClick={() => navigate('/docentes')}>Docentes</button>
+                <button className="nav-item" onClick={() => navigate('/empresas')}>Empresas</button>
+                <button className="nav-item" onClick={() => navigate('/reportes')}>Reportes</button>
             </nav>
 
-            {/* Busqueda */}
             <div className="breadcrumb">
                 <span>Inicio</span>
                 <span className="separator">/</span>
                 <span>Búsqueda de Alumno</span>
             </div>
 
-            {/* Main */}
             <main className="main-content">
-                {/* Buscar */}
                 <section className="search-section">
                     <h2 className="section-title">Buscar alumno</h2>
-
                     <div className="search-box">
                         <input
                             type="text"
@@ -78,83 +76,79 @@ const Principal = () => {
                             onChange={(e) => setNumeroControl(e.target.value)}
                         />
                         <button className="btn btn-primary" onClick={handleBuscar}>
-                            Buscar alumno
+                            {loading ? "Buscando..." : "Buscar alumno"}
                         </button>
                     </div>
-
                     <div className="action-buttons">
-                        <button className="btn btn-secondary">Registrar Proyecto</button>
-                        <button className="btn btn-secondary">Asignar Asesor</button>
+                        <button className="btn btn-secondary" onClick={() => setModalOpen(true)}>
+                            Registrar Proyecto
+                        </button>
                         <button className="btn btn-secondary">Generar Reporte</button>
                     </div>
                 </section>
 
-                {/* Resultado */}
                 {alumnoEncontrado && (
                     <section className="results-section">
-                        <h2 className="section-title">Resultado de la Búsqueda:</h2>
-
+                        <h2 className="section-title">Resultado de la Búsqueda</h2>
                         <div className="result-card">
                             <div className="card-header">
-                                <h3 className="student-name">Alumno: {alumnoEncontrado.nombre}</h3>
-                                <div className="card-actions">
-                                    <button className="btn-action btn-reports">Reportes</button>
-                                    <button className="btn-action btn-edit">Editar</button>
-                                    <button className="btn-action btn-delete">Eliminar</button>
+                                <div className="student-avatar">
+                                    {alumnoEncontrado.nombre?.charAt()}
+                                </div>
+                                <div className="student-header-info">
+                                    <h3 className="student-name">{alumnoEncontrado.nombre}</h3>
+                                    <span className="student-meta">
+                                        {alumnoEncontrado.num_control} · {alumnoEncontrado.carrera}
+                                    </span>
                                 </div>
                             </div>
-
-                            <div className="card-body">
+                            <div className="card-columns">
                                 <div className="info-column">
-                                    <div className="info-item">
-                                        <span className="info-label">No.Control:</span>
-                                        <span className="info-value">{alumnoEncontrado.noControl}</span>
+                                    <div className="column-header">
+                                        <h4 className="column-title">Datos Personales</h4>
                                     </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Carrera:</span>
-                                        <span className="info-value">{alumnoEncontrado.carrera}</span>
-                                    </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Proyecto:</span>
-                                        <span className="info-value">{alumnoEncontrado.proyecto}</span>
-                                    </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Empresa:</span>
-                                        <span className="info-value">{alumnoEncontrado.empresa}</span>
-                                    </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Periodo:</span>
-                                        <span className="info-value">{alumnoEncontrado.periodo}</span>
-                                    </div>
+                                    <div className="info-item"><span className="info-label">Género</span><span className="info-value">{alumnoEncontrado.genero}</span></div>
+                                    <div className="info-item"><span className="info-label">Dirección</span><span className="info-value">{alumnoEncontrado.direccion}</span></div>
+                                    <div className="info-item"><span className="info-label">Correo</span><span className="info-value">{alumnoEncontrado.correo}</span></div>
+                                    <div className="info-item"><span className="info-label">Celular</span><span className="info-value">{alumnoEncontrado.celular}</span></div>
+                                    <div className="info-item"><span className="info-label">Teléfono Fijo</span><span className="info-value">{alumnoEncontrado.telefono_fijo}</span></div>
                                 </div>
-
                                 <div className="info-column">
-                                    <div className="info-item">
-                                        <span className="info-label">Proyecto:</span>
-                                        <span className="info-value">{alumnoEncontrado.proyecto}</span>
+                                    <div className="column-header">
+                                        <h4 className="column-title">Residencia Profesional</h4>
                                     </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Empresa:</span>
-                                        <span className="info-value">{alumnoEncontrado.empresa}</span>
+                                    <div className="info-item"><span className="info-label">Periodo</span><span className="info-value">{alumnoEncontrado.id_periodo}</span></div>
+                                    <div className="info-item"><span className="info-label">Fecha Inicio</span><span className="info-value">{alumnoEncontrado.fecha_inicio}</span></div>
+                                    <div className="info-item"><span className="info-label">Fecha Fin</span><span className="info-value">{alumnoEncontrado.fecha_fin}</span></div>
+                                    <div className="info-item"><span className="info-label">Empresa</span><span className="info-value">{alumnoEncontrado.nombre_empresa}</span></div>
+                                    <div className="info-item"><span className="info-label">Departamento</span><span className="info-value">{alumnoEncontrado.departamento}</span></div>
+                                    <div className="info-item"><span className="info-label">Proyecto</span><span className="info-value">{alumnoEncontrado.nombre_proyecto}</span></div>
+                                    <div className="info-item"><span className="info-label">Asesor Interno</span><span className="info-value">{alumnoEncontrado.profesor_nombre}</span></div>
+                                </div>
+                                <div className="info-column">
+                                    <div className="column-header">
+                                        <h4 className="column-title">Asesor Externo</h4>
                                     </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Asesor:</span>
-                                        <span className="info-value">{alumnoEncontrado.asesor}</span>
-                                    </div>
-                                    <div className="info-item">
-                                        <span className="info-label">Estado:</span>
-                                        <span className="status-badge status-proceso">
-                      {alumnoEncontrado.estado}
-                    </span>
-                                    </div>
+                                    <div className="info-item"><span className="info-label">Nombre</span><span className="info-value">{alumnoEncontrado.asesor_nombre}</span></div>
+                                    <div className="info-item"><span className="info-label">Cargo</span><span className="info-value">{alumnoEncontrado.cargo}</span></div>
+                                    <div className="info-item"><span className="info-label">Correo</span><span className="info-value">{alumnoEncontrado.asesor_correo}</span></div>
+                                    <div className="info-item"><span className="info-label">Teléfono</span><span className="info-value">{alumnoEncontrado.telefono}</span></div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 )}
             </main>
+
+            {/* Modal recibe initialData con los datos del alumno encontrado */}
+            <RegistrarProyectoModal
+                isOpen={modalOpen}
+                onClose={() => setModalOpen(false)}
+                initialData={alumnoEncontrado}
+                onSuccess={() => {}}
+            />
         </div>
     );
 };
 
-export default Principal
+export default Principal;
